@@ -1,0 +1,62 @@
+.booked-tours {
+    padding: 2rem 0;
+  }
+  
+  .booked-tours h2 {
+    color: var(--heading-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .booked-tours p {
+    color: var(--text-color);
+  }
+  
+  .booked-tours .list-group-item {
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #fff;
+  }
+  
+  .booked-tours .list-group-item h5 {
+    color: var(--heading-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .booked-tours .list-group-item p {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Pagination styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .pagination span {
+    width: 2rem;
+    height: 2rem;
+    padding: 2px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--secondary-color);
+    color: var(--heading-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 700;
+    margin: 0 5px;
+  }
+  
+  .pagination .active__page {
+    background: var(--secondary-color);
+    color: #fff !important;
+  }
+  

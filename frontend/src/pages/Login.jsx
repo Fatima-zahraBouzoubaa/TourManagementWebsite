@@ -22,6 +22,7 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: 'LOGIN_START' });
+  
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
@@ -32,20 +33,38 @@ const Login = () => {
       });
   
       const result = await res.json();
+      console.log('Login response:', result); // Log the entire response
+  
       if (!res.ok) {
         alert(result.message);
         dispatch({ type: 'LOGIN_FAILURE', payload: result.message });
         return;
       }
   
-      console.log(result);
-      localStorage.setItem('token', result.token); // Store the token in localStorage
-      dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
-      navigate('/');
+      // Check the response structure
+      if (result.token && result.email) {
+        const userData = {
+          email: result.email,
+          role: result.role,
+          username: result.username, // Ensure username is included
+          _id: result._id, // Include user ID if necessary
+        };
+  
+        localStorage.setItem('token', result.token); // Store the token in localStorage
+        dispatch({ type: 'LOGIN_SUCCESS', payload: userData }); // Ensure the payload is the user data
+        navigate('/');
+      } else {
+        console.error('Invalid response structure:', result); // Log the invalid structure
+        throw new Error('Invalid response structure');
+      }
     } catch (err) {
+      console.error('Login error:', err); // Log the error for debugging
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
     }
   };
+  
+  
+  
   
   return (
     <section>

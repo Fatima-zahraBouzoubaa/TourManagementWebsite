@@ -12,6 +12,10 @@ const Header = () => {
   const { user, dispatch } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  useEffect(() => {
+    console.log('User in Header:', user); // Log user data
+  }, [user]);
+
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
     navigate('/');
@@ -42,7 +46,6 @@ const Header = () => {
   const nav_links = [
     { path: '/home', display: 'Home' },
     { path: '/tours', display: 'Tours' },
-    ...(user && user.role === 'admin' ? [{ path: '#', display: 'Manage Tours' }] : []),
     ...(user ? [{ path: `/booking/user/${user._id}`, display: 'Booked Tours' }] : []),
   ];
 
@@ -66,7 +69,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                 ))}
-                {user && user.role==="admin" &&(
+                {user && user.role === "admin" && (
                   <li className="nav__item">
                     <button className="dropdown__toggle" onClick={toggleDropdown}>
                       Manage Tours
@@ -88,7 +91,7 @@ const Header = () => {
                 {
                   user ? (
                     <>
-                      <h5 className="mb-0">{user.username}</h5>
+                      <h5 className="mb-0">{user.username}</h5> {/* Ensure this matches the user data */}
                       <Button className="btn btn-dark" onClick={logout}>Logout</Button>
                     </>
                   ) : (

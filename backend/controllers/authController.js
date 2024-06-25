@@ -14,7 +14,7 @@ export const register = async (req, res) => {
             email: req.body.email,
             password: hash,
             photo: req.body.photo,
-            role: req.body.role || 'user'  // Assuming role is provided in the request body or default to 'user'
+            role: req.body.role || 'user',  // Assuming role is provided in the request body or default to 'user'
         });
 
         await newUser.save();

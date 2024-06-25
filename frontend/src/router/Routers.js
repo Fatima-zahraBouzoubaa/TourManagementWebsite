@@ -9,6 +9,7 @@ import SearchResultList from './../pages/SearchResultList';
 import ThankYou from '../pages/ThankYou';
 import BookedTours from '../component/Tour-Booked/BookedTours';
 import AddTour from '../pages/AddTour'
+import UpdateTour from '../pages/UpdateTour';
 const Routers = () => {
   return (
     <Routes>    <Route path='/' element={<Navigate to='/home'/>}/>
@@ -22,6 +23,7 @@ const Routers = () => {
       <Route path="/admin/add-tour" element={<AddTour />} /> {/* Route for AddTour */}
       <Route path="/thank-you" element={<ThankYou/>}></Route>
       <Route path="/booking/user/:userId" element={<BookedTours />} />
+      <Route path="admin/update-tour/:id" element={<UpdateTour />} />
     </Routes>
 
   )

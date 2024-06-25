@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 import '../styles/addtour.css';
-import {BASE_URL} from './../utils/config';
+import { BASE_URL } from './../utils/config';
+
 const AddTour = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -14,6 +16,8 @@ const AddTour = () => {
     featured: false,
   });
 
+  const navigate = useNavigate(); // Use the useNavigate hook
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -21,12 +25,13 @@ const AddTour = () => {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Retrieve the authentication token from localStorage
-    const token = localStorage.getItem('token');
-  
+    const token = localStorage.getItem('token'); 
+
     try {
       const response = await fetch(`${BASE_URL}/tours/admin/add-tour`, {
         method: 'POST',
@@ -36,21 +41,20 @@ const AddTour = () => {
         },
         body: JSON.stringify(formData),
       });
-      if (!response.ok) {
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Tour created:', data);
+        navigate('/tours'); // Redirect to the tours page after successful creation
+      } else {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to create tour');
       }
-      const data = await response.json();
-      console.log('Tour created:', data);
-      // Optionally, redirect or show a success message upon successful creation
     } catch (error) {
       console.error('Failed to create tour:', error.message);
-      alert(`Failed to create tour: ${error.message}`); // Display error message to user
+      alert(`Failed to create tour: ${error.message}`);
     }
   };
-  
-  
-  
 
   return (
     <div className="container mt-5">

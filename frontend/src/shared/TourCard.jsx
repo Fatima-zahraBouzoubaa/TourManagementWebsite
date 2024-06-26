@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, CardBody } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import calculateAvgRating from '../utils/avgRating';
 import './tour-card.css';
 import { BASE_URL } from '../utils/config';
+import { AuthContext } from '../context/AuthContext';
 
 const TourCard = ({ tour }) => {
   const { _id, title, city, photo, price, featured, reviews } = tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext); // Get the user from context
 
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
@@ -70,15 +72,17 @@ const TourCard = ({ tour }) => {
           </div>
 
           {/* Admin buttons */}
-          <div className="admin__buttons mt-3 d-flex justify-content-between">
-            <button className='btn btn-warning'>
-              <Link to={{
-                pathname: `/admin/update-tour/${_id}`,
-                state: { tourData: tour }  // Pass tour data as state
-              }}>Update</Link>
-            </button>
-            <button className='btn btn-danger' onClick={handleDelete}>Delete</button>
-          </div>
+          {user && user.role === 'admin' && (
+            <div className="admin__buttons mt-3 d-flex justify-content-between">
+              <button className='btn btn-warning'>
+                <Link to={{
+                  pathname: `/admin/update-tour/${_id}`,
+                  state: { tourData: tour }  // Pass tour data as state
+                }} style={{ color: 'white', textDecoration: 'none' }}>Update</Link>
+              </button>
+              <button className='btn btn-danger' onClick={handleDelete}>Delete</button>
+            </div>
+          )}
         </CardBody>
       </Card>
     </div>

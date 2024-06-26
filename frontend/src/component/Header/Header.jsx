@@ -10,7 +10,6 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     console.log('User in Header:', user); // Log user data
@@ -38,15 +37,14 @@ const Header = () => {
 
   const toggleMenu = () => menuRef.current.classList.toggle('show__menu');
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+
 
   // Dynamic nav links
   const nav_links = [
     { path: '/home', display: 'Home' },
     { path: '/tours', display: 'Tours' },
-    ...(user ? [{ path: `/booking/user/${user._id}`, display: 'Booked Tours' }] : []),
+    ...(user && user.role === 'user' ? [{ path: `/booking/user/${user._id}`, display: 'Booked Tours' }] : []),
+    ...(user && user.role === 'admin' ? [{ path: `/admin/add-tour`, display: 'Add Tour' }] : []),
   ];
 
   return (
@@ -69,20 +67,6 @@ const Header = () => {
                     </NavLink>
                   </li>
                 ))}
-                {user && user.role === "admin" && (
-                  <li className="nav__item">
-                    <button className="dropdown__toggle" onClick={toggleDropdown}>
-                      Manage Tours
-                    </button>
-                    {showDropdown && (
-                      <div className="dropdown__content">
-                        <Link to="/admin/add-tour">Add Tour</Link>
-                        <Link to="/admin/modify-tour">Modify Tour</Link>
-                        <Link to="/admin/delete-tour">Delete Tour</Link>
-                      </div>
-                    )}
-                  </li>
-                )}
               </ul>
             </div>
             {/* Menu end */}

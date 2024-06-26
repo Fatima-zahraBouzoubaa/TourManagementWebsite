@@ -35,28 +35,27 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email: req.body.email });
 
         if (!user) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "Email not found",
                 status: "404 Not Found",
             });
-            return;
         }
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);
 
         if (!validPassword) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "Invalid password",
                 status: "400 Bad Request",
             });
-            return;
         }
 
         const token = createtoken(user._id, user.role);
 
         res.status(200).json({
-            name: user.name,
+            username: user.username,
             email: user.email,
+            _id: user._id, // Include the user ID in the response
             token: token,
             role: user.role,
         });

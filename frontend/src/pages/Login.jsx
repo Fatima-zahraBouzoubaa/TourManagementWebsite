@@ -42,7 +42,7 @@ const Login = () => {
       }
   
       // Check the response structure
-      if (result.token && result.email) {
+      if (result.token && result.email && result.username && result._id) {
         const userData = {
           email: result.email,
           role: result.role,
@@ -62,10 +62,7 @@ const Login = () => {
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
     }
   };
-  
-  
-  
-  
+
   return (
     <section>
       <Container>

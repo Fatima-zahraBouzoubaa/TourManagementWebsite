@@ -30,7 +30,7 @@ const UpdateTour = () => {
         });
         if (response.ok) {
           const data = await response.json();
-          setFormData(data);
+          setFormData(data.data); // Ensure data is set properly, adjust if necessary based on response structure
         } else {
           console.error('Failed to fetch tour data');
         }

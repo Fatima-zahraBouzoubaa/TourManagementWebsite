@@ -28,7 +28,7 @@ const SearchResultList = () => {
 
       </Container>
     </section>
-    <Newsletter />
+    
     </>
   )
 }

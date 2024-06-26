@@ -35,21 +35,24 @@ const Booking = ({ tour, avgRating }) => {
   };
 
   const serviceFee = 10;
-  const totalAmount = Number(price)+Number(price) * Number(booking.guestSize) + Number(serviceFee);
+  const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee);
 
   const handleClick = async (e) => {
     e.preventDefault();
-    
+
     try {
-      if (!user || user === undefined || user===null) {
+      if (!user || user === undefined || user === null) {
         return alert('Please sign in');
       }
+
+      const token = localStorage.getItem('token'); // Retrieve the token from localStorage
       const res = await fetch(`${BASE_URL}/booking`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the token in the headers
         },
-        credentials:'include',
+        credentials: 'include',
         body: JSON.stringify(booking),
       });
 

@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import { createContext, useEffect, useReducer } from 'react';
 
 const initial_state = {
@@ -24,13 +25,13 @@ const AuthReducer = (state, action) => {
         loading: true,
         error: null
       };
-      case "LOGIN_SUCCESS":
-        console.log('LOGIN_SUCCESS payload:', action.payload); // Log payload
-        return {
-          user: action.payload,
-          loading: false,
-          error: null
-        };
+    case "LOGIN_SUCCESS":
+      console.log('LOGIN_SUCCESS payload:', action.payload); // Log payload
+      return {
+        user: action.payload,
+        loading: false,
+        error: null
+      };
     case "LOGIN_FAILURE":
       return {
         user: null,
